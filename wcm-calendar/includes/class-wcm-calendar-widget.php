@@ -1,18 +1,18 @@
 <?php
 /**
- * Adds My_Improved_Weather_Widget widget.
+ * Adds WCM_Calendar_Widget widget.
  */
-class My_Improved_Weather_Widget extends WP_Widget {
+class WCM_Calendar_Widget extends WP_Widget {
 
 	/**
 	 * Register widget with WordPress.
 	 */
 	public function __construct() {
 		parent::__construct(
-			'My_Improved_Weather_Widget', // Base ID
-			'My Improved Weather Widget', // Name
+			'WCM_Calendar_Widget', // Base ID
+			'WCM Calendar Widget', // Name
 			[
-				'description' => __('My Improved Weather Widget', 'text_domain'),
+				'description' => __('WCM Calendar Widget', 'text_domain'),
 			] // Args
 		);
 	}
@@ -27,8 +27,7 @@ class My_Improved_Weather_Widget extends WP_Widget {
 	 */
 	public function widget($args, $instance) {
 		$title = apply_filters('widget_title', $instance['title']);
-		$city = $instance['city'];
-		$country = $instance['country'];
+		$calendarId = $instance['calendarId'];
 
 		// start widget
 		echo $args['before_widget'];
@@ -39,13 +38,10 @@ class My_Improved_Weather_Widget extends WP_Widget {
 		}
 
 		/**
-		 * get todays weather and display it
-		 *
-		 * @todo: get these values from this widget instance's settings
+		 * get this weeks events and display them
 		 */
-		$city_underscores = str_replace(' ', '_', $city); // New York => New_York
 		?>
-			<div class="miww_todays_forecast" data-city="<?php echo $city_underscores; ?>" data-country="<?php echo $country; ?>">
+			<div class="wcm_calendar_events" data-calendarId="<?php echo $calendarId; ?>">
 				<em>Loading...</em>
 			</div>
 		<?php
@@ -65,19 +61,13 @@ class My_Improved_Weather_Widget extends WP_Widget {
 		if (isset($instance['title'])) {
 			$title = $instance['title'];
 		} else {
-			$title = __('Current Weather', 'text_domain');
+			$title = __('This Weeks Calendar', 'text_domain');
 		}
 
-		if (isset($instance['city'])) {
-			$city = $instance['city'];
+		if (isset($instance['calendarId'])) {
+			$calendarId = $instance['calendarId'];
 		} else {
-			$city = __('Lund', 'text_domain');
-		}
-
-		if (isset($instance['country'])) {
-			$country = $instance['country'];
-		} else {
-			$country = __('SE', 'text_domain');
+			$calendarId = __('', 'text_domain');
 		}
 
 		?>
@@ -99,31 +89,16 @@ class My_Improved_Weather_Widget extends WP_Widget {
 
 			<!-- city -->
 			<p>
-				<label for="<?php echo $this->get_field_name('city'); ?>">
-					<?php _e('City:'); ?>
+				<label for="<?php echo $this->get_field_name('calendarId'); ?>">
+					<?php _e('Calendar ID:'); ?>
 				</label>
 
 				<input
 					class="widefat"
-					id="<?php echo $this->get_field_id('city'); ?>"
-					name="<?php echo $this->get_field_name('city'); ?>"
+					id="<?php echo $this->get_field_id('calendarId'); ?>"
+					name="<?php echo $this->get_field_name('calendarId'); ?>"
 					type="text"
-					value="<?php echo esc_attr($city); ?>"
-				/>
-			</p>
-
-			<!-- country -->
-			<p>
-				<label for="<?php echo $this->get_field_name('country'); ?>">
-					<?php _e('Country:'); ?>
-				</label>
-
-				<input
-					class="widefat"
-					id="<?php echo $this->get_field_id('country'); ?>"
-					name="<?php echo $this->get_field_name('country'); ?>"
-					type="text"
-					value="<?php echo esc_attr($country); ?>"
+					value="<?php echo esc_attr($calendarId); ?>"
 				/>
 			</p>
 
@@ -143,10 +118,9 @@ class My_Improved_Weather_Widget extends WP_Widget {
 	public function update($new_instance, $old_instance) {
 		$instance = [];
 		$instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
-		$instance['city'] = (!empty($new_instance['city'])) ? strip_tags($new_instance['city']) : 'Lund';
-		$instance['country'] = (!empty($new_instance['country'])) ? strip_tags($new_instance['country']) : 'SE';
+		$instance['calendarId'] = (!empty($new_instance['calendarId'])) ? strip_tags($new_instance['calendarId']) : 'Lund';
 
 		return $instance;
 	}
 
-} // class My_Improved_Weather_Widget
+} // class WCM_Calendar_Widget
