@@ -97,6 +97,9 @@ class Wcm_Calendar_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wcm-calendar-public.js', array( 'jquery' ), $this->version, false );
+		wp_localize_script( $this->plugin_name, 'wcm_calendar_settings', [
+			'ajax_url' => admin_url('admin-ajax.php'),  // http://plugins.test/wp-admin/admin-ajax.php
+		] );
 
 	}
 

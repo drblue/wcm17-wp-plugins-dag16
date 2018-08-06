@@ -128,6 +128,11 @@ class Wcm_Calendar {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wcm-calendar-widget.php';
 
+		/**
+		 * The class responsible for the AJAX-part of the calendar event widget.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/wcm-calendar-ajax.php';
+
 		$this->loader = new Wcm_Calendar_Loader();
 
 	}

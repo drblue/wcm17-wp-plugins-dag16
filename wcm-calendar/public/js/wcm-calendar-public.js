@@ -1,32 +1,25 @@
 (function( $ ) {
 	'use strict';
 
-	/**
-	 * All of the code for your public-facing JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note: It has been assumed you will write jQuery code here, so the
-	 * $ function reference has been prepared for usage within the scope
-	 * of this function.
-	 *
-	 * This enables you to define handlers, for when the DOM is ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * When the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and/or other possibilities.
-	 *
-	 * Ideally, it is not considered best practise to attach more than a
-	 * single DOM-ready or window-load handler for a particular page.
-	 * Although scripts in the WordPress core, Plugins and Themes may be
-	 * practising this, we should strive to set a better example in our own work.
-	 */
+	$(document).ready(function() {
+
+		$('.widget_wcm_calendar_widget .wcm_calendar_events').each(function(index, widget) {
+			var $widget = $(widget),
+			calendarId = $widget.data('calendarid');
+
+			console.log("WCM Calendar Widget - Getting events for calendar:", calendarId);
+			$.post(
+				wcm_calendar_settings.ajax_url,
+				{
+					action: 'wcm_calendar_get_events',
+					calendarId: calendarId,
+				},
+				function(data) {
+					console.log("WCM Calendar Widget - Succesfully got events back from Wordpress:", data);
+				}
+			);
+		});
+
+	});
 
 })( jQuery );
